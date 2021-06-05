@@ -5,3 +5,5 @@
 -I/usr/opt/eosio.cdt/1.6.2/include/eosiolib/contracts/
 -I/usr/opt/eosio.cdt/1.6.2/include/eosiolib/core/
 -I/usr/opt/eosio.cdt/1.6.2/include/
+-I/contract/include/eosio.token
+
