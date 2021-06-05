@@ -55,6 +55,8 @@ cleos get table eosio.token bob accounts
 cleos get table eosio.token jane accounts
 
 cleos push action eosio.token transfer '[ "bob", "eosio.token", "1.0000 SYS", "m" ]' -p bob@active
+
+cleos get table eosio.token bob stake
 ```
 
 ## Listing the messages
