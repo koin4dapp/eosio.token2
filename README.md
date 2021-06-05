@@ -53,7 +53,6 @@ cleos push action eosio.token transfer '[ "bob", "jane", "15.0000 SYS", "m" ]' -
 cleos get table eosio.token eosio.token accounts
 cleos get table eosio.token bob accounts
 cleos get table eosio.token jane accounts
-<<<<<<< HEAD
 
 cleos push action eosio.token transfer '[ "bob", "eosio.token", "1.0000 SYS", "m" ]' -p bob@active
 ```
@@ -66,8 +65,6 @@ cleos get table talk '' message
 
 ```
 
-=======
->>>>>>> 5fe8ccf2e05a85edc80913f12114bf427b9b8aa7
 
 cleos get table eosio.token bob stake
 
