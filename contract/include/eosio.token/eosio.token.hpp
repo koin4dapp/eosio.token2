@@ -101,10 +101,8 @@ namespace eosio {
          [[eosio::action]]
          void close( const name& owner, const symbol& symbol );
 
-         [[eosio::on_notify("*::transfer")]]
+         //[[eosio::on_notify("*::transfer")]]
          void deposit(const name& from, const name& to, const asset& quantity, const string& memo);
-         [[eosio::on_notify("eosio.token::transfer")]]
-         void dummytansfer(eosio::name from, eosio::name to, eosio::asset quantity, std::string memo) {deposit(from,to,quantity,memo);} // This is a hack, otherwise the ontransfer function won't work;
          
          static asset get_supply( const name& token_contract_account, const symbol_code& sym_code )
          {
@@ -157,5 +155,7 @@ namespace eosio {
          void sub_balance( const name& owner, const asset& value );
          void add_balance( const name& owner, const asset& value, const name& ram_payer );
    };
+
+   
 
 }
