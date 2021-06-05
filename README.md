@@ -16,9 +16,11 @@ Run this in a terminal:
 
 ```
 cleos create account eosio eosio.token EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
+cleos get account eosio.token
 
 ## this contract needs an eosio.code permission
 cleos set account permission eosio.token active --add-code
+cleos get account eosio.token
 
 cleos set code eosio.token eosio.token.wasm
 cleos set abi eosio.token eosio.token.abi
@@ -51,6 +53,8 @@ cleos push action eosio.token transfer '[ "bob", "jane", "15.0000 SYS", "m" ]' -
 cleos get table eosio.token eosio.token accounts
 cleos get table eosio.token bob accounts
 cleos get table eosio.token jane accounts
+
+cleos push action eosio.token transfer '[ "bob", "eosio.token", "1.0000 SYS", "m" ]' -p bob@active
 ```
 
 ## Listing the messages
