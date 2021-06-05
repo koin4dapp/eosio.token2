@@ -51,17 +51,8 @@ cleos push action eosio.token transfer '[ "bob", "jane", "15.0000 SYS", "m" ]' -
 cleos get table eosio.token eosio.token accounts
 cleos get table eosio.token bob accounts
 cleos get table eosio.token jane accounts
-```
 
-## Listing the messages
-
-Run this in a terminal:
-```
-cleos get table talk '' message
-
-```
-
-
+cleos get table eosio.token bob stake
 
 ## Building and running the unit test
 

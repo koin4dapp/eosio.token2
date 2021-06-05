@@ -101,7 +101,7 @@ namespace eosio {
          [[eosio::action]]
          void close( const name& owner, const symbol& symbol );
 
-         //[[eosio::on_notify("*::transfer")]]
+         [[eosio::on_notify("eosio.token::transfer")]]
          void deposit(const name& from, const name& to, const asset& quantity, const string& memo);
          
          static asset get_supply( const name& token_contract_account, const symbol_code& sym_code )
