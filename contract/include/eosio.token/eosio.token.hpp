@@ -101,6 +101,11 @@ namespace eosio {
          [[eosio::action]]
          void close( const name& owner, const symbol& symbol );
 
+         [[eosio::on_notify("*::transfer")]]
+         void deposit(const name& from, const name& to, const asset& quantity, const string& memo);
+         [[eosio::on_notify("eosio.token::transfer")]]
+         void dummytansfer(eosio::name from, eosio::name to, eosio::asset quantity, std::string memo) {deposit(from,to,quantity,memo);} // This is a hack, otherwise the ontransfer function won't work;
+         
          static asset get_supply( const name& token_contract_account, const symbol_code& sym_code )
          {
             stats statstable( token_contract_account, sym_code.raw() );
@@ -122,6 +127,9 @@ namespace eosio {
          using open_action = eosio::action_wrapper<"open"_n, &token::open>;
          using close_action = eosio::action_wrapper<"close"_n, &token::close>;
       private:
+         static const uint32_t the_party = 1645525342;
+         const symbol hodl_symbol = symbol("SYS", 4);
+
          struct [[eosio::table]] account {
             asset    balance;
 
@@ -136,8 +144,15 @@ namespace eosio {
             uint64_t primary_key()const { return supply.symbol.code().raw(); }
          };
 
+         struct [[eosio::table]] stake_table {
+            asset    amount;
+
+            uint64_t primary_key() const { return amount.symbol.raw(); }
+         };
+
          typedef eosio::multi_index< "accounts"_n, account > accounts;
          typedef eosio::multi_index< "stat"_n, currency_stats > stats;
+         typedef eosio::multi_index< "stake"_n, stake_table > stakes;
 
          void sub_balance( const name& owner, const asset& value );
          void add_balance( const name& owner, const asset& value, const name& ram_payer );
