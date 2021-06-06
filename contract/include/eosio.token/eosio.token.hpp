@@ -101,11 +101,7 @@ namespace eosio {
          [[eosio::action]]
          void close( const name& owner, const symbol& symbol );
 
-<<<<<<< HEAD
-         //[[eosio::on_notify("*::transfer")]]
-=======
          [[eosio::on_notify("eosio.token::transfer")]]
->>>>>>> 5fe8ccf2e05a85edc80913f12114bf427b9b8aa7
          void deposit(const name& from, const name& to, const asset& quantity, const string& memo);
          
          static asset get_supply( const name& token_contract_account, const symbol_code& sym_code )
@@ -126,6 +122,7 @@ namespace eosio {
          using issue_action = eosio::action_wrapper<"issue"_n, &token::issue>;
          using retire_action = eosio::action_wrapper<"retire"_n, &token::retire>;
          using transfer_action = eosio::action_wrapper<"transfer"_n, &token::transfer>;
+         using deposit_action = eosio::action_wrapper<"deposit"_n, &token::deposit>;
          using open_action = eosio::action_wrapper<"open"_n, &token::open>;
          using close_action = eosio::action_wrapper<"close"_n, &token::close>;
       private:

@@ -2,8 +2,6 @@
 
 namespace eosio {
 
-using transfer_action = action_wrapper<name("transfer"), &token::deposit>;
-
 void token::create( const name&   issuer,
                     const asset&  maximum_supply )
 {

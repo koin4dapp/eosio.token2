@@ -67,7 +67,6 @@ cleos get table talk '' message
 
 ```
 
-
 cleos get table eosio.token bob stake
 
 ## Building and running the unit test
