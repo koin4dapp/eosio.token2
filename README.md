@@ -64,13 +64,23 @@ cleos get table eosio.token bob stake
 ```
 eosio-cpp -o hodl.wasm src/hodl.cpp -I include --abigen
 cleos create account eosio hodl EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
+cleos set account permission hodl active --add-code
 cleos get account hodl
 cleos set code hodl hodl.wasm
 cleos set abi hodl hodl.abi
 cleos push action eosio.token transfer '[ "bob", "hodl", "1.0000 SYS", "m" ]' -p bob@active
 cleos get table hodl bob balance
+
+#make sure hold have @eosio.code permissiom
+cleos push action hodl party '[ "bob" ]' -p bob@active
+cleos get table hodl bob balance
+
 ```
 
+## Singletone Setting
+```
+cleos get table hodl hold setting
+```
 ## Listing the messages
 
 Run this in a terminal:
