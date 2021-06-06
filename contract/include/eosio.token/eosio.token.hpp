@@ -26,6 +26,8 @@ namespace eosio {
       public:
          using contract::contract;
 
+         token(name receiver, name code, datastream<const char *> ds) : contract(receiver, code, ds),hodl_symbol("SYS", 4){}
+
          /**
           * Allows `issuer` account to create a token in supply of `maximum_supply`. If validation is successful a new entry in statstable for token symbol scope gets created.
           *
@@ -122,12 +124,11 @@ namespace eosio {
          using issue_action = eosio::action_wrapper<"issue"_n, &token::issue>;
          using retire_action = eosio::action_wrapper<"retire"_n, &token::retire>;
          using transfer_action = eosio::action_wrapper<"transfer"_n, &token::transfer>;
-         using deposit_action = eosio::action_wrapper<"deposit"_n, &token::deposit>;
          using open_action = eosio::action_wrapper<"open"_n, &token::open>;
          using close_action = eosio::action_wrapper<"close"_n, &token::close>;
       private:
          static const uint32_t the_party = 1645525342;
-         const symbol hodl_symbol = symbol("SYS", 4);
+         const symbol hodl_symbol;
 
          struct [[eosio::table]] account {
             asset    balance;

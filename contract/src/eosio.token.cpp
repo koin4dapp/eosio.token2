@@ -158,7 +158,7 @@ void token::close( const name& owner, const symbol& symbol )
 
 void token::deposit(const name& from, const name& to, const asset& quantity, const string& memo)
 {
-   check(false, "notification handler triggered successfully.");
+   print("ada");
 
    if (from == get_self() || to != get_self())
    {
