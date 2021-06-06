@@ -9,14 +9,16 @@ using namespace eosio;
 
 class [[eosio::contract("hodl")]] hodl : public eosio::contract {
   private:
-    static const uint32_t the_party = 1645525342;
     const symbol hodl_symbol;
 
     //prepare singleton
     struct [[eosio::table]] setting {
       uint32_t the_party;
       void next_party(uint32_t current_time, uint32_t minutes) {
-        the_party=((uint32_t)(current_time/minutes*60)*(minutes*60))+(minutes*60);
+        print(current_time);
+        print(minutes);
+        the_party=((uint32_t)(current_time/(minutes*60))*(minutes*60))+(minutes*60);
+        print(the_party);
       }
     } default_setting;
     using singleton_type = eosio::singleton<"setting"_n, setting>;
@@ -34,6 +36,13 @@ class [[eosio::contract("hodl")]] hodl : public eosio::contract {
       return current_time_point().sec_since_epoch();
     }
 
+    uint32_t get_next_party() {
+      if (singleton_instance.exists())
+        return singleton_instance.get().the_party;
+      else
+        return 0;
+    }
+
   public:
     using contract::contract;
 
@@ -48,7 +57,7 @@ class [[eosio::contract("hodl")]] hodl : public eosio::contract {
         return;
       }
 
-      check(now() < the_party, "You're way late");
+      check(now() < get_next_party(), "You're way late");
       check(quantity.amount > 0, "When pigs fly");
       check(quantity.symbol == hodl_symbol, "These are not the droids you are looking for.");
 
@@ -80,7 +89,7 @@ class [[eosio::contract("hodl")]] hodl : public eosio::contract {
       require_auth(hodler);
 
       // //Check the current time has pass the the party time
-      //check(now() > the_party, "Hold your horses");
+      check(now() > get_next_party(), "Hold your horses");
 
       balance_table balance(get_self(), hodler.value);
       auto hodl_it = balance.find(hodl_symbol.raw());

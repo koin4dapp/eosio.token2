@@ -53,10 +53,6 @@ cleos push action eosio.token transfer '[ "bob", "jane", "15.0000 SYS", "m" ]' -
 cleos get table eosio.token eosio.token accounts
 cleos get table eosio.token bob accounts
 cleos get table eosio.token jane accounts
-
-cleos push action eosio.token transfer '[ "bob", "eosio.token", "1.0000 SYS", "m" ]' -p bob@active
-
-cleos get table eosio.token bob stake
 ```
 
 ## Payable actions
@@ -74,12 +70,14 @@ cleos get table hodl bob balance
 #make sure hold have @eosio.code permissiom
 cleos push action hodl party '[ "bob" ]' -p bob@active
 cleos get table hodl bob balance
-
 ```
 
 ## Singletone Setting
+
 ```
-cleos get table hodl hold setting
+cleos get table hodl hodl setting
+cleos push action hodl setup '[ 15 ]' -p hodl@active
+cleos get table hodl hodl setting
 ```
 ## Listing the messages
 
