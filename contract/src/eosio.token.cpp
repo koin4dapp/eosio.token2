@@ -156,34 +156,4 @@ void token::close( const name& owner, const symbol& symbol )
    acnts.erase( it );
 }
 
-void token::deposit(const name& from, const name& to, const asset& quantity, const string& memo)
-{
-   print("ada");
-
-   if (from == get_self() || to != get_self())
-   {
-      //nothing to do   
-      return;
-   }
-
-   //check(now() < the_party, "You're way late");
-   check(quantity.amount > 0, "non negatif please.");
-   check(quantity.symbol == hodl_symbol, "These are not the droids you are looking for.");
-
-   require_recipient(from);
-   require_recipient(to);
-
-   stakes stake(get_self(), from.value);
-   auto hodl_it = stake.find(hodl_symbol.raw());
-
-   if (hodl_it != stake.end())
-      stake.modify(hodl_it, get_self(), [&](auto &row) {
-         row.amount += quantity;
-      });
-   else
-      stake.emplace(get_self(), [&](auto &row) {
-         row.amount = quantity;
-      });
-}
-
 } /// namespace eosio

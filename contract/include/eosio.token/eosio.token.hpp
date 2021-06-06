@@ -102,10 +102,7 @@ namespace eosio {
           */
          [[eosio::action]]
          void close( const name& owner, const symbol& symbol );
-
-         [[eosio::on_notify("eosio.token::transfer")]]
-         void deposit(const name& from, const name& to, const asset& quantity, const string& memo);
-         
+        
          static asset get_supply( const name& token_contract_account, const symbol_code& sym_code )
          {
             stats statstable( token_contract_account, sym_code.raw() );
@@ -144,15 +141,8 @@ namespace eosio {
             uint64_t primary_key()const { return supply.symbol.code().raw(); }
          };
 
-         struct [[eosio::table]] stake_table {
-            asset    amount;
-
-            uint64_t primary_key() const { return amount.symbol.raw(); }
-         };
-
          typedef eosio::multi_index< "accounts"_n, account > accounts;
          typedef eosio::multi_index< "stat"_n, currency_stats > stats;
-         typedef eosio::multi_index< "stake"_n, stake_table > stakes;
 
          void sub_balance( const name& owner, const asset& value );
          void add_balance( const name& owner, const asset& value, const name& ram_payer );
