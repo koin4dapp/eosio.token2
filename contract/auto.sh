@@ -17,9 +17,11 @@ cleos create account eosio hodl EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5G
 cleos set account permission hodl active --add-code
 cleos set code hodl hodl.wasm
 cleos set abi hodl hodl.abi
-cleos get table hodl hodl setting
-cleos push action hodl setup '[ 15 ]' -p hodl@active
-cleos get table hodl hodl setting
-cleos push action eosio.token transfer '[ "bob", "hodl", "1.0000 SYS", "m" ]' -p bob@active
-cleos push action hodl party '[ "bob" ]' -p bob@active
-cleos get table hodl bob balance
+#prove singleton
+#cleos get table hodl hodl setting
+#cleos push action hodl setup '[ 15 ]' -p hodl@active
+#cleos get table hodl hodl setting
+#prove on_notify
+#cleos push action eosio.token transfer '[ "bob", "hodl", "1.0000 SYS", "m" ]' -p bob@active
+#cleos push action hodl party '[ "bob" ]' -p bob@active
+#cleos get table hodl bob balance
