@@ -12,6 +12,7 @@ cleos create account eosio jane EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5G
 cleos push action eosio.token create '[ "eosio.token", "1000000000.0000 SYS"]' -p eosio.token@active
 cleos push action eosio.token issue '[ "eosio.token", "100.0000 SYS", "memo" ]' -p eosio.token@active
 cleos push action eosio.token transfer '[ "eosio.token", "bob", "25.0000 SYS", "m" ]' -p eosio.token@active
+cleos push action eosio.token transfer '[ "eosio.token", "jane", "25.0000 SYS", "m" ]' -p eosio.token@active
 
 #eosio-cpp -o hodl.wasm src/hodl.cpp -I include --abigen
 #cleos create account eosio hodl EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
@@ -41,5 +42,6 @@ cleos set abi tictactoe tictactoe.abi
 #exercise 3
 #cleos push action eosio.token transfer '[ "bob", "tictactoe", "1.0000 SYS", "jane" ]' -p bob@active
 #cleos get table tictactoe tictactoe games
-
+#cleos push action eosio.token transfer '[ "jane", "tictactoe", "1.0000 SYS", "bob" ]' -p jane@active
+#cleos get table tictactoe tictactoe games
 

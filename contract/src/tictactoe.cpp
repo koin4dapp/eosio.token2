@@ -46,10 +46,6 @@ CONTRACT tictactoe : public contract {
       check(quantity.symbol == hodl_symbol, "These are not the droids you are looking for.");
  
 	  name opponent = name(memo);
-
-    print (from);
-    print (opponent);
-    print (quantity);
 	  
 	  check(is_account(opponent),"opponent account not found");
       check(from!=opponent, "Could not challenge youself!");
@@ -65,25 +61,19 @@ CONTRACT tictactoe : public contract {
           pair.host = from;
           pair.opponent = opponent;
     	  pair.hoststake = quantity;
-	      pair.opponentstake = {0.0000,hodl_symbol};
-        print(pair.hoststake);
-        print(pair.opponentstake);        
+	      pair.opponentstake = asset(0.0000,hodl_symbol);      
         });
 	  }
 	  else if (itrh!=_gameskey.end()) {
 		//ram charge to same_payer
-        print("itrh");
-        print(itrh->hoststake);
         _game.modify(*itrh, same_payer, [&](auto& pair) { 
-		    //pair.hoststake += quantity;
+		    pair.hoststake += quantity;
         });  
 	  }
 	  else {
 		//ram charge to same_payer
-        print("itrc");
-        print(itrc->opponentstake);
         _game.modify(*itrc, same_payer, [&](auto& pair) { 
-		    //pair.opponentstake += quantity;
+		    pair.opponentstake += quantity;
         });  		  
 	  }
     }
