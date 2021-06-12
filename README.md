@@ -80,6 +80,11 @@ cleos push action hodl setup '[ 15 ]' -p hodl@active
 cleos get table hodl hodl setting
 ```
 
+## tic-tac-toe
+```
+
+```
+
 ## Building and running the unit test
 
 The source code for the unit test is at the `tests` directory within the IDE. To build the tests, run this in the terminal:
