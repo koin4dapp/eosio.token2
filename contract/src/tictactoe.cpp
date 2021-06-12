@@ -67,19 +67,19 @@ CONTRACT tictactoe : public contract {
 	  else if (itrh!=_gameskey.end()) {
 		//ram charge to same_payer
         _game.modify(*itrh, same_payer, [&](auto& pair) { 
-          print("ada1");
-          print(pair.host_stake);
-          print(quantity);
-		      pair.host_stake += quantity;
+          //print("ada1");
+          //print(pair.host_stake);
+          //print(quantity);
+		      //pair.host_stake += quantity;
         });  
 	  }
 	  else {
 		//ram charge to same_payer
         _game.modify(*itrc, same_payer, [&](auto& pair) { 
-          print("ada2");
-          print(pair.opponent_stake);
-          print(quantity);
-		      pair.opponent_stake += quantity;
+          //print("ada2");
+          //print(pair.opponent_stake);
+          //print(quantity);
+		      //pair.opponent_stake += quantity;
         });  		  
 	  }
     }
