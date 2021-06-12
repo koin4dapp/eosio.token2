@@ -17,12 +17,11 @@ CONTRACT tictactoe : public contract {
     TABLE game_record {
       name host;
       name opponent;
-	  eosio::asset host_stake;
-	  eosio::asset opponent_stake;
+      eosio::asset host_stake;
+      eosio::asset opponent_stake;
 
       uint64_t primary_key() const {return host.value;}
       uint128_t secondary_key() const {return combine_ids(host.value,opponent.value);}
-      EOSLIB_SERIALIZE(game_record, (host)(opponent))
     };
 	
     typedef eosio::multi_index<name("games"), game_record,
@@ -66,7 +65,7 @@ CONTRACT tictactoe : public contract {
           pair.host = from;
           pair.opponent = opponent;
     	  pair.host_stake = quantity;
-	      pair.opponent_stake = asset(0,hodl_symbol);
+	      pair.opponent_stake = {0.0000,hodl_symbol};
         print(pair.host_stake);
         print(pair.opponent_stake);        
         });
