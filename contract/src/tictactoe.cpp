@@ -17,8 +17,8 @@ CONTRACT tictactoe : public contract {
     TABLE game_record {
       name host;
       name opponent;
-	    eosio::asset host_stake;
-	    eosio::asset opponent_stake;
+	  eosio::asset host_stake;
+	  eosio::asset opponent_stake;
 
       uint64_t primary_key() const {return host.value;}
       uint128_t secondary_key() const {return combine_ids(host.value,opponent.value);}
@@ -33,6 +33,7 @@ CONTRACT tictactoe : public contract {
         //action can only be taken by contract account
         require_auth(get_self());
         print("Welcome, ", host, " and ", opponent,"!");
+		print(hodl_symbol);
     }
 
 	[[eosio::on_notify("eosio.token::transfer")]]
@@ -44,8 +45,12 @@ CONTRACT tictactoe : public contract {
 
       check(quantity.amount > 0, "When pigs fly");
       check(quantity.symbol == hodl_symbol, "These are not the droids you are looking for.");
-	  
+ 
 	  name opponent = name(memo);
+
+    print (from);
+    print (opponent);
+    print (quantity);
 	  
 	  check(is_account(opponent),"opponent account not found");
       check(from!=opponent, "Could not challenge youself!");
@@ -60,26 +65,22 @@ CONTRACT tictactoe : public contract {
         _game.emplace(get_self(), [&](auto& pair) { 
           pair.host = from;
           pair.opponent = opponent;
-	    	  pair.host_stake = quantity;
-		      pair.opponent_stake = asset(0,hodl_symbol);
+    	  pair.host_stake = quantity;
+	      pair.opponent_stake = asset(0,hodl_symbol);
         });
 	  }
 	  else if (itrh!=_gameskey.end()) {
 		//ram charge to same_payer
+        print(itrh->host_stake);
         _game.modify(*itrh, same_payer, [&](auto& pair) { 
-          //print("ada1");
-          //print(pair.host_stake);
-          //print(quantity);
-		      //pair.host_stake += quantity;
+		    //pair.host_stake += quantity;
         });  
 	  }
 	  else {
 		//ram charge to same_payer
+        print(itrc->host_stake);
         _game.modify(*itrc, same_payer, [&](auto& pair) { 
-          //print("ada2");
-          //print(pair.opponent_stake);
-          //print(quantity);
-		      //pair.opponent_stake += quantity;
+		    //pair.opponent_stake += quantity;
         });  		  
 	  }
     }
@@ -97,8 +98,8 @@ CONTRACT tictactoe : public contract {
           auto itrp = _gameskey.find(combine_ids(opponent.value, host.value));          
           if (itrp!=_gameskey.end())
             _gameskey.erase(itrp);
-          else
-            check(false, "Pair not found.");
+          else 
+            check(false, "Game not found.");
         }
     }   
 
