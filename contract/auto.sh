@@ -12,11 +12,11 @@ cleos push action eosio.token create '[ "eosio.token", "1000000000.0000 SYS"]' -
 cleos push action eosio.token issue '[ "eosio.token", "100.0000 SYS", "memo" ]' -p eosio.token@active
 cleos push action eosio.token transfer '[ "eosio.token", "bob", "25.0000 SYS", "m" ]' -p eosio.token@active
 
-eosio-cpp -o hodl.wasm src/hodl.cpp -I include --abigen
-cleos create account eosio hodl EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
-cleos set account permission hodl active --add-code
-cleos set code hodl hodl.wasm
-cleos set abi hodl hodl.abi
+#eosio-cpp -o hodl.wasm src/hodl.cpp -I include --abigen
+#cleos create account eosio hodl EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
+#cleos set account permission hodl active --add-code
+#cleos set code hodl hodl.wasm
+#cleos set abi hodl hodl.abi
 #prove singleton
 #cleos get table hodl hodl setting
 #cleos push action hodl setup '[ 15 ]' -p hodl@active
@@ -25,3 +25,14 @@ cleos set abi hodl hodl.abi
 #cleos push action eosio.token transfer '[ "bob", "hodl", "1.0000 SYS", "m" ]' -p bob@active
 #cleos push action hodl party '[ "bob" ]' -p bob@active
 #cleos get table hodl bob balance
+
+eosio-cpp -o tictactoe.wasm src/tictactoe.cpp -I include --abigen
+cleos create account eosio tictactoe EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
+cleos set account permission tictactoe active --add-code
+cleos set code tictactoe hodl.wasm
+cleos set abi tictactoe hodl.abi
+
+#exercise 1
+#cleos push action tictactoe create '[ bob ]' -p bob@active
+
+
