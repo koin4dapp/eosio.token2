@@ -8,6 +8,7 @@ cleos set code eosio.token eosio.token.wasm
 cleos set abi eosio.token eosio.token.abi
 
 cleos create account eosio bob EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
+cleos create account eosio jane EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
 cleos push action eosio.token create '[ "eosio.token", "1000000000.0000 SYS"]' -p eosio.token@active
 cleos push action eosio.token issue '[ "eosio.token", "100.0000 SYS", "memo" ]' -p eosio.token@active
 cleos push action eosio.token transfer '[ "eosio.token", "bob", "25.0000 SYS", "m" ]' -p eosio.token@active
@@ -29,10 +30,16 @@ cleos push action eosio.token transfer '[ "eosio.token", "bob", "25.0000 SYS", "
 eosio-cpp -o tictactoe.wasm src/tictactoe.cpp -I include --abigen
 cleos create account eosio tictactoe EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
 cleos set account permission tictactoe active --add-code
-cleos set code tictactoe hodl.wasm
-cleos set abi tictactoe hodl.abi
+cleos set code tictactoe tictactoe.wasm
+cleos set abi tictactoe tictactoe.abi
 
 #exercise 1
-#cleos push action tictactoe create '[ bob ]' -p bob@active
+#cleos push action tictactoe create '[ bob ]' -p tictactoe@active
+#exercise 2
+#cleos push action tictactoe create '[ jane, bob ]' -p bob@active
+#cleos get table tictactoe tictactoe games
+#exercise 3
+#cleos push action eosio.token transfer '[ "bob", "tictactoe", "1.0000 SYS", "jane" ]' -p bob@active
+#cleos get table tictactoe tictactoe games
 
 
