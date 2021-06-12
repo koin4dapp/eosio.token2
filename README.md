@@ -79,15 +79,6 @@ cleos get table hodl hodl setting
 cleos push action hodl setup '[ 15 ]' -p hodl@active
 cleos get table hodl hodl setting
 ```
-## Listing the messages
-
-Run this in a terminal:
-```
-cleos get table talk '' message
-
-```
-
-cleos get table eosio.token bob stake
 
 ## Building and running the unit test
 
@@ -117,3 +108,4 @@ To remove the existing chain and create another:
 ```
 rm -rf ~/eosio/chain
 nodeos --config-dir ~/eosio/chain/config --data-dir ~/eosio/chain/data -e -p eosio --plugin eosio::chain_api_plugin --contracts-console
+```
