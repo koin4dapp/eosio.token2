@@ -67,10 +67,13 @@ CONTRACT tictactoe : public contract {
           pair.opponent = opponent;
     	  pair.host_stake = quantity;
 	      pair.opponent_stake = asset(0,hodl_symbol);
+        print(pair.host_stake);
+        print(pair.opponent_stake);        
         });
 	  }
 	  else if (itrh!=_gameskey.end()) {
 		//ram charge to same_payer
+        print("itrh");
         print(itrh->host_stake);
         _game.modify(*itrh, same_payer, [&](auto& pair) { 
 		    //pair.host_stake += quantity;
@@ -78,7 +81,8 @@ CONTRACT tictactoe : public contract {
 	  }
 	  else {
 		//ram charge to same_payer
-        print(itrc->host_stake);
+        print("itrc");
+        print(itrc->opponent_stake);
         _game.modify(*itrc, same_payer, [&](auto& pair) { 
 		    //pair.opponent_stake += quantity;
         });  		  
