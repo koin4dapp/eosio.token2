@@ -40,8 +40,11 @@ cleos set abi tictactoe tictactoe.abi
 #cleos push action tictactoe create '[ jane, bob ]' -p bob@active
 #cleos get table tictactoe tictactoe games
 #exercise 3
+#cleos get table eosio.token tictactoe accounts
 #cleos push action eosio.token transfer '[ "bob", "tictactoe", "1.0000 SYS", "jane" ]' -p bob@active
 #cleos get table tictactoe tictactoe games
+#get table eosio.token tictactoe accounts
 #cleos push action eosio.token transfer '[ "jane", "tictactoe", "1.0000 SYS", "bob" ]' -p jane@active
 #cleos get table tictactoe tictactoe games
-
+#cleos push action tictactoe close '[ "jane", "bob" ]' -p bob@active
+#cleos get table eosio.token tictactoe accounts
