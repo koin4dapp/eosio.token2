@@ -58,7 +58,7 @@ CONTRACT tictactoe : public contract {
 			  if (board[pos]>0) break;
 			  pos++;			  
 			}
-			return pos==9;
+			return (pos==9);
 		}
 
 		uint64_t primary_key() const {return host.value;}
@@ -95,23 +95,23 @@ CONTRACT tictactoe : public contract {
 		auto itrc = _gameskey.find(combine_ids(opponent.value, from.value));
 		if (itrh==_gameskey.end() && itrc==_gameskey.end()) {
 			//ram charge to action caller
-			_game.emplace(get_self(), [&](auto& pair) { 
-				pair.host = from;
-				pair.opponent = opponent;
-				pair.hoststake = quantity;
-				pair.opponentstake = asset(0.0000,hodl_symbol);
+			_game.emplace(get_self(), [&](auto& game) { 
+				game.host = from;
+				game.opponent = opponent;
+				game.hoststake = quantity;
+				game.opponentstake = asset(0.0000,hodl_symbol);
 			});
 		}
 		else if (itrh!=_gameskey.end()) {
 			//ram charge to same_payer
-			_game.modify(*itrh, same_payer, [&](auto& pair) { 
-				pair.hoststake += quantity;
+			_game.modify(*itrh, same_payer, [&](auto& game) { 
+				game.hoststake += quantity;
 			});  
 		}
 		else {
 			//ram charge to same_payer
-			_game.modify(*itrc, same_payer, [&](auto& pair) { 
-				pair.opponentstake += quantity;
+			_game.modify(*itrc, same_payer, [&](auto& game) { 
+				game.opponentstake += quantity;
 			});  		  
 		}
     }
@@ -124,7 +124,7 @@ CONTRACT tictactoe : public contract {
 		auto _gameskey = _game.get_index<name("gameskey")>();
 		auto itr = _gameskey.find(combine_ids(host.value, opponent.value));
 		check(itr!=_gameskey.end(), "game not found.");
-		check((itr->winner==name(), "game over!");
+		check(itr->winner==name(), "game over!");
 		_game.modify(*itr, same_payer, [&]( auto& game ) {
 			check(game.is_valid_movement(by, row, col), "invalid move.");
 			if (game.winner!=name()) {
@@ -137,26 +137,26 @@ CONTRACT tictactoe : public contract {
 		});
 	}
 	
-    ACTION close(name opponent, name host) {
-        //find by host (primary key)
-        check(has_auth(host), "Please auth yourself.");
-        game_index _game(get_self(), get_self().value);
-        //find using secondary key
-        auto _gameskey = _game.get_index<name("gameskey")>();
-        auto itr = _gameskey.find(combine_ids(host.value, opponent.value));          
-        if (itr!=_gameskey.end()) {
-			if (!itr->is_draw()) {
-				if (itr->winner==name()) {
-					check(itr->opponentstake==asset(0,hodl_symbol), "Close failed, opponent has staked."); 
-					payback(itr->host, itrh->hoststake, "Your stake freed.");
-				}
-			}
-			_gameskey.erase(itr);
-	    }
-        else {
-			check(false, "Game not found.");
+  ACTION close(name opponent, name host) {
+      //find by host (primary key)
+      check(has_auth(host), "Please auth yourself.");
+      game_index _game(get_self(), get_self().value);
+      //find using secondary key
+      auto _gameskey = _game.get_index<name("gameskey")>();
+      auto itr = _gameskey.find(combine_ids(host.value, opponent.value)); 
+      if (itr!=_gameskey.end()) {
+        if (bool& !(itr->is_draw())) {
+          if (itr->winner==name()) {
+            check(itr->opponentstake==asset(0,hodl_symbol), "Close failed, opponent has staked."); 
+            payback(itr->host, itr->hoststake, "Your stake freed.");
+          }
         }
-    }   
+      _gameskey.erase(itr);
+      }
+      else {
+        check(false, "Game not found.");
+      }
+  }   
 
   private: 
 	const symbol hodl_symbol;
