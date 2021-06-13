@@ -48,3 +48,9 @@ cleos set abi tictactoe tictactoe.abi
 #cleos get table tictactoe tictactoe games
 #cleos push action tictactoe close '[ "jane", "bob" ]' -p bob@active
 #cleos get table eosio.token tictactoe accounts
+#cleos push action tictactoe move '[jane, bob, bob, 1,0]' -p bob
+#cleos push action tictactoe move '[jane, bob, jane, 0,0]' -p jane
+#cleos push action tictactoe move '[jane, bob, bob, 1,1]' -p bob
+#cleos push action tictactoe move '[jane, bob, jane, 0,1]' -p jane
+#cleos push action tictactoe move '[jane, bob, bob, 1,2]' -p bob
+#cleos push action tictactoe move '[jane, bob, jane, 0,2]' -p jane
